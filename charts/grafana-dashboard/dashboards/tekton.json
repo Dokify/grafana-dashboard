@@ -303,7 +303,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "count(kube_node_status_condition{condition=\"Ready\",status=\"true\",app_kubernetes_io_instance=\"prometheus\"})",
+          "expr": "count(kube_node_status_condition{condition=\"Ready\",status=\"true\"})",
           "interval": "",
           "legendFormat": "nodes",
           "queryType": "randomWalk",
@@ -401,7 +401,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "count(container_processes{container=\"POD\"})",
+          "expr": "count(container_processes{namespace=\"tekton-pipelines\"}) by (pod)",
           "interval": "",
           "legendFormat": "pods",
           "queryType": "randomWalk",
@@ -708,7 +708,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(count_over_time({job=\"tekton-pipelines/controller\"} |~ \"(?i)$search\" | json | line_format \"{{.log}}\" | json | label_format controller=\"{{TrimSuffix (TrimPrefix .knative_dev_controller `github.com.tektoncd.pipeline.pkg.reconciler.`) `.Reconciler`}}\" | level=~\"$level\" [$__interval])) by (knative_dev_controller)",
+          "expr": "sum(count_over_time({job=\"tekton-pipelines/controller\"} |~ \"(?i)$search\"|~ \"(?i)$level\" | json | line_format \"{{.log}}\" | json| __error__!=\"\" | label_format controller=\"{{TrimSuffix (TrimPrefix .knative_dev_controller `github.com.tektoncd.pipeline.pkg.reconciler.`) `.Reconciler`}}\" [$__interval])) by (knative_dev_controller)",
           "legendFormat": "",
           "queryType": "randomWalk",
           "refId": "A"
@@ -826,7 +826,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(count_over_time({job=\"tekton-pipelines/controller\"} |~ \"(?i)$search\" |~ \"$controller\" | json | line_format \"{{.log}}\" | json | level=~\"$level\" [$__interval])) by (level)",
+          "expr": "sum(count_over_time({job=\"tekton-pipelines/controller\"} |~ \"(?i)$search\" |~ \"$controller\" |~ \"(?i)$level\"| json | line_format \"{{.log}}\" [$__interval])) by (level)",
           "legendFormat": "",
           "queryType": "randomWalk",
           "refId": "A"
@@ -899,7 +899,7 @@
       "pluginVersion": "7.3.5",
       "targets": [
         {
-          "expr": "{job=\"tekton-pipelines/controller\"} |~ \"(?i)$search\" |~ \"(?i)$level\" |~ \"$controller\" | json | line_format \"{{.log}}\" | json | level=~\"$level\" | label_format controller=\"{{TrimSuffix (TrimPrefix .knative_dev_controller `github.com.tektoncd.pipeline.pkg.reconciler.`) `.Reconciler`}}\" | line_format \"{{.level | upper | trunc 4}}\\t[{{if eq .logger `tekton-pipelines-controller.event-broadcaster`}}event{{else}}{{.controller}}{{end}}]\\t{{with .knative_dev_key}}{{.}}: {{end}}{{.msg}}\"",
+          "expr": "{job=\"tekton-pipelines/controller\"} |~ \"(?i)$search\" |~ \"(?i)$level\" |~ \"$controller\" | json | line_format \"{{.log}}\" | json | label_format controller=\"{{TrimSuffix (TrimPrefix .knative_dev_controller `github.com.tektoncd.pipeline.pkg.reconciler.`) `.Reconciler`}}\" | line_format \"{{.level | upper | trunc 4}}\\t[{{if eq .logger `tekton-pipelines-controller.event-broadcaster`}}event{{else}}{{.controller}}{{end}}]\\t{{with .knative_dev_key}}{{.}}: {{end}}{{.msg}}\"",
           "legendFormat": "",
           "queryType": "randomWalk",
           "refId": "A"

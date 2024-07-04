@@ -72,7 +72,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "count(kube_node_status_condition{condition=\"Ready\",status=\"true\",app_kubernetes_io_instance=\"prometheus\"})",
+          "expr": "count(kube_node_status_condition{condition=\"Ready\",status=\"true\",job=\"kube-state-metrics\"})",
           "interval": "",
           "legendFormat": "nodes",
           "queryType": "randomWalk",
@@ -170,7 +170,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "count(container_processes{container=\"POD\"})",
+          "expr": "count(kube_pod_info)",
           "interval": "",
           "legendFormat": "pods",
           "queryType": "randomWalk",

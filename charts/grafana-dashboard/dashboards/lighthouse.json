@@ -302,7 +302,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(count_over_time({app=~\"$app\"} |~ \"(?i)$search\" |~ \"(?i)$level\" | json | line_format \"{{.log}}\" | json | level=~\"$level\" [$__interval])) by (app)",
+          "expr": "sum(count_over_time({app=~\"$app\"} |~ \"(?i)$search\" |~ \"(?i)$level\" | json | line_format \"{{.log}}\" [$__interval])) by (app)",
           "legendFormat": "",
           "queryType": "randomWalk",
           "refId": "A"
@@ -416,7 +416,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(count_over_time({app=~\"$app\"} |~ \"(?i)$search\" |~ \"(?i)$level\" | json | line_format \"{{.log}}\" | json | level=~\"$level\" [$__interval])) by (level)",
+          "expr": "sum(count_over_time({app=~\"$app\"} |~ \"(?i)$search\" |~ \"(?i)$level\" | json | line_format \"{{.log}}\" [$__interval])) by (level)",
           "legendFormat": "",
           "queryType": "randomWalk",
           "refId": "A"
@@ -492,7 +492,7 @@
       "pluginVersion": "7.3.5",
       "targets": [
         {
-          "expr": "{app=~\"$app\"} |~ \"(?i)$search\" |~ \"(?i)$level\" | json | line_format \"{{.log}}\" | json | level=~\"$level\" | line_format \"{{.level | upper | trunc 4}}\\t[{{.app}}{{with .plugin}}:{{.}}{{end}}]\\t{{ if .name }}{{.name}}: {{end}}{{if .Webhook}}{{.Webhook}} webhook for {{.Link}}: {{end}}{{.msg}}{{with .error}} Error: {{.}}{{end}}\\t({{.pod}})\"",
+          "expr": "{app=~\"$app\"} |~ \"(?i)$search\" |~ \"(?i)$level\" | json | line_format \"{{.log}}\" | line_format \"{{.level | upper | trunc 4}}\\t[{{.app}}{{with .plugin}}:{{.}}{{end}}]\\t{{ if .name }}{{.name}}: {{end}}{{if .Webhook}}{{.Webhook}} webhook for {{.Link}}: {{end}}{{.msg}}{{with .error}} Error: {{.}}{{end}}\\t({{.pod}})\"",
           "legendFormat": "",
           "queryType": "randomWalk",
           "refId": "A"

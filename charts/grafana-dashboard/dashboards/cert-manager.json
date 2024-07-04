@@ -256,7 +256,7 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "sum by(pod) (rate(container_cpu_usage_seconds_total{container=\"cert-manager\"}[5m]))",
+          "expr": "sum by(pod) (rate(container_cpu_usage_seconds_total{container=~\"cert-manager.+\"}[5m]))",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -333,7 +333,7 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "sum by(pod) (container_memory_working_set_bytes{container=\"cert-manager\"})",
+          "expr": "sum by(pod) (container_memory_working_set_bytes{container=~\"cert-manager.+\"})",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
